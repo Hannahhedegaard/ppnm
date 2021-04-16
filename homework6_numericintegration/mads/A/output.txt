@@ -1,0 +1,24 @@
+-------------------------------
+Integral of sqrt(x) from 0 to 1
+-------------------------------
+  Absolute accurary goal : 1.0e-04
+  Relative accurary goal : 1.0e-04
+  Value (should be 2/3)  : 0.6666809329
+  Number of calls        : 40
+
+---------------------------------------
+Integral of 4*sqrt(1 - x*x) from 0 to 1
+---------------------------------------
+  Absolute accurary goal : 1.0e-04
+  Relative accurary goal : 1.0e-04
+  Value (should be pi)   : 3.1415975077
+  Number of calls        : 80
+
+------------------------------
+Integral of sin(x) from 0 to 1
+------------------------------
+  Absolute accurary goal : 1.0e-04
+  Relative accurary goal : 1.0e-04
+  Value (should be 2)    : 1.9999998323
+  Number of calls        : 96
+

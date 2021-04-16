@@ -1,0 +1,48 @@
+--------------------------------------
+Integral of 2/(1 + x*x) from 0 to +inf
+--------------------------------------
+  Absolute accurary goal : 1.0e-06
+  Relative accurary goal : 1.0e-06
+  Exact value (pi)       : 3.1415926536
+  Variable trans. quad.  : 
+    Calc. value          : 3.1415926613
+    Absolute difference  : 7.8e-09
+    Error estimate       : 2.6e-08
+    Number of calls      : 424
+  GSL (qagiu)            : 
+    Calc. value          : 3.1415926536
+    Absolute difference  : 0.0e+00
+    Error estimate       : 5.2e-10
+
+---------------------------------------
+Integral of exp(-x*x) from -inf to +inf
+---------------------------------------
+  Absolute accurary goal : 1.0e-06
+  Relative accurary goal : 1.0e-06
+  Exact value (sqrt(pi)) : 1.7724538509
+  Variable trans. quad.  : 
+    Calc. value          : 1.7724538133
+    Absolute difference  : 3.8e-08
+    Error estimate       : 2.6e-08
+    Number of calls      : 636
+  GSL (qagi)             : 
+    Calc. value          : 1.7724538509
+    Absolute difference  : 2.2e-15
+    Error estimate       : 3.4e-08
+
+-------------------------------------------
+Integral of 3*sin(x)**4/x**4 from -inf to 0
+-------------------------------------------
+  Absolute accurary goal : 1.0e-06
+  Relative accurary goal : 1.0e-06
+  Exact value (pi)       : 3.1415926536
+  Variable trans. quad.  : 
+    Calc. value          : 3.1415821824
+    Absolute difference  : 1.0e-05
+    Error estimate       : 4.7e-08
+    Number of calls      : 1264
+  GSL (qagil)            : 
+    Calc. value          : 3.1415924805
+    Absolute difference  : 1.7e-07
+    Error estimate       : 3.0e-06
+

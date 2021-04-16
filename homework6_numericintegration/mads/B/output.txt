@@ -1,0 +1,43 @@
+---------------------------------
+Integral of 1/sqrt(x) from 0 to 1
+---------------------------------
+  Absolute accurary goal : 1.0e-04
+  Relative accurary goal : 1.0e-04
+  Standard quadrature    : 
+    Value (should be 2)  : 1.9999973880
+    Number of calls      : 17140
+  Clenshaw-Curtis        : 
+    Value (should be 2)  : 1.9999998903
+    Number of calls      : 52
+  GSL (qags)             : 
+    Value (should be 2)  : 2.0000000000
+
+-------------------------------------
+Integral of ln(x)/sqrt(x) from 0 to 1
+-------------------------------------
+  Absolute accurary goal : 1.0e-04
+  Relative accurary goal : 1.0e-04
+  Standard quadrature    : 
+    Value (should be -4) : -3.9999983490
+    Number of calls      : 29972
+  Clenshaw-Curtis        : 
+    Value (should be -4) : -3.9999981334
+    Number of calls      : 272
+  GSL (qags)             : 
+    Value (should be -4) : -4.0000000000
+
+------------------------------------------------------
+Integral of 4*sqrt(1 - x*x) from 0 to 1 (should be pi)
+------------------------------------------------------
+std  = open four point quadrature (no variable transformation)
+cc   = clenshaw-curtis transformation before using std
+qags = gsl qags routine
+D    = absolute difference wrt. exact value of pi
+N    = number of function calls
+ abs. acc.  rel. acc.     D(std)      D(cc)    D(qags)     N(std)      N(cc)
+   1.0e-05    1.0e-05    1.8e-07    3.1e-08    1.9e-08        228        304
+   1.0e-06    1.0e-06    4.1e-09    3.5e-11    2.3e-09        560        856
+   1.0e-07    1.0e-07    1.7e-10    2.0e-12    2.9e-10       1592       1952
+   1.0e-08    1.0e-08    6.3e-12    5.4e-14    1.3e-11       3788       6016
+   1.0e-09    1.0e-09    1.4e-13    1.3e-15    1.6e-12       9596      14016
+   1.0e-10    1.0e-10    6.2e-15    0.0e+00    2.0e-13      25748      30540
