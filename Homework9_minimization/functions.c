@@ -1,8 +1,10 @@
 #include <math.h>
+#include <float.h>
 #include <stdio.h>
 #include <gsl/gsl_matrix.h>
 #include <gsl/gsl_vector.h>
 #include<gsl/gsl_blas.h>
+//#define DBL_EPSILON 2.22045e-16
 
 void GS_decomp(gsl_matrix* A, gsl_matrix* R);
 void GS_solve(gsl_matrix* Q, gsl_matrix* R, gsl_vector* b, gsl_vector* x);
@@ -28,22 +30,16 @@ void qnewton(
 	double sy;
 	double gamma;
 	double s_grad;
-	double dx = eps*0.01;
+	double dx = sqrt(DBL_EPSILON);
 	
 	gsl_matrix* B = gsl_matrix_alloc(n,n);
-	gsl_matrix* as = gsl_matrix_alloc(n,n);
-	gsl_matrix* sa = gsl_matrix_alloc(n,n);
-	gsl_matrix* dB = gsl_matrix_alloc(n,n);
 	gsl_matrix_set_identity(B);
     gsl_vector* grad_F = gsl_vector_alloc(n);         
     gsl_vector* grad_Fs = gsl_vector_alloc(n);         
     gsl_vector* Dx = gsl_vector_alloc(n);    
     gsl_vector* y = gsl_vector_alloc(n);            
-    gsl_vector* By = gsl_vector_alloc(n);    
-    gsl_matrix* a = gsl_matrix_alloc(n,n);    
-    gsl_matrix* s = gsl_matrix_alloc(n,n);    
+    gsl_vector* By = gsl_vector_alloc(n);        
     gsl_vector* u = gsl_vector_alloc(n);    
-    gsl_matrix* R = gsl_matrix_alloc(n,n);
     
     while(1){
 		iter += 1;
@@ -56,11 +52,11 @@ void qnewton(
             gsl_vector_set(grad_F,j,df/dx);             
 			gsl_vector_set(x,j,gsl_vector_get(x,j)-dx);  
         }
-		 gsl_blas_dgemv(CblasNoTrans, -1, B, grad_F, 0, Dx);
+		gsl_blas_dgemv(CblasNoTrans, -1, B, grad_F, 0, Dx);
     
         lambda = 2;
         while(1){
-            lambda = (double)lambda/2;
+            lambda = lambda/2.0;
             gsl_vector_scale(Dx,lambda);
             gsl_vector_memcpy(y,x);
             gsl_vector_add(y,Dx);
@@ -74,10 +70,13 @@ void qnewton(
 				gsl_matrix_set_identity(B);
 				break;
 			}
-			gsl_vector_scale(Dx,(double)1/lambda);
+			gsl_vector_scale(Dx,1.0/lambda);
         }
         
-        if(gsl_blas_dnrm2(Dx) < dx) {
+        if(gsl_blas_dnrm2(Dx) < dx*gsl_blas_dnrm2(x)) {
+                break;
+                }
+		if(gsl_blas_dnrm2(grad_F) < eps) {
                 break;
                 }
 	
@@ -96,31 +95,21 @@ void qnewton(
 	// u og y-vektor bestemmes
 	gsl_vector_sub(Dx, x); // Vektoren Dx er lig s. (s <- s - x)	
 	gsl_vector_memcpy(u,Dx); // u = s
-	gsl_vector_sub(grad_Fs, grad_F); // y-vektor bestemmes y = grad_Fs
+	gsl_vector_sub(grad_Fs, grad_F); // y-vektor bestemmes y = grad_Fs - grad_F
 	gsl_blas_dgemv(CblasNoTrans, 1.0, B, grad_Fs, 0.0, By); // B*y -> By
 	gsl_vector_sub(u, By); // u = s - By
 	// prikprodukter uy og sy bestemmes
-	gsl_blas_ddot(u, grad_Fs, &uy); // prikprodukt u^T*y = uy
+	
 	gsl_blas_ddot(Dx, grad_Fs, &sy); // prikprodukt s^T*y = sy
 	
-	if (fabs(sy)>eps){ // laver B om hvis sy er større end eps
+	if (fabs(sy)>1e-12){ // laver B om hvis sy er større end 1e-12
+		gsl_blas_ddot(u, grad_Fs, &uy); // prikprodukt u^T*y = uy
+		gamma = uy/(2.0*sy); // gamma bestemmes 
 	
-	gamma = uy/(2.0*sy); // gamma bestemmes 
-	gsl_vector_scale(Dx, -gamma); // Dx <- -s*gamma
-	gsl_vector_add(u, Dx);		  // u <- u + -s*gmma
-	gsl_vector_scale(u, 1.0/sy);  // a bestemmes: u <- u/sy (a = u)
-	
-	// laver matrixer til at bestemme δB
-	for (int i = 0; i<u->size; i++){
-		gsl_matrix_set(a,i,0,gsl_vector_get(u,i)); //a-matricen (n*1)
-		gsl_matrix_set(s,i,0,gsl_vector_get(Dx,i)); //s-matricen (n*1)
-	}
-	gsl_blas_dgemm(CblasNoTrans,CblasTrans, 1.0, a, s, 0.0, as);
-	gsl_blas_dgemm(CblasNoTrans,CblasTrans, 1.0, s, a, 0.0, sa);
-	
-	gsl_matrix_memcpy(dB, as); 
-	gsl_matrix_add(dB,sa); // as^T + sa^T = δB
-	gsl_matrix_add(B,dB); // B + δB - B opdateres.
+		gsl_blas_daxpy(-gamma,Dx,u); // u=u-gamma*s
+		
+		gsl_blas_dger(1.0/sy,u,Dx,B); // B= B + u*s^T/s^T*y
+		gsl_blas_dger(1.0/sy,Dx,u,B); // B= B + s*u^T/s^T*y
 	}
 	
 	// opdaterer til det nye step
@@ -130,18 +119,12 @@ void qnewton(
     printf("iterations = %d\n", iter);
 	
     gsl_matrix_free(B);
-    gsl_matrix_free(as);
-    gsl_matrix_free(sa);
-    gsl_matrix_free(dB);
     gsl_vector_free(grad_F);
     gsl_vector_free(grad_Fs);
     gsl_vector_free(y);  
     gsl_vector_free(By); 
     gsl_vector_free(Dx);
-    gsl_matrix_free(a);
-    gsl_matrix_free(s);
     gsl_vector_free(u);
-    gsl_matrix_free(R);
     
 }
 		

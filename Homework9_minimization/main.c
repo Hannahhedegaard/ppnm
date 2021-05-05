@@ -20,6 +20,12 @@ double f1(gsl_vector* x){
     return pow((xx+1),2)-3;
 }
 
+double f2(gsl_vector* x){
+	double xx = gsl_vector_get(x,0);
+	double yy = gsl_vector_get(x,1);
+	return (pow(xx,2)+pow(yy,2));
+}
+
 double fRose(gsl_vector* x){
 	double xx = gsl_vector_get(x,0);
 	double yy = gsl_vector_get(x,1);
@@ -81,21 +87,28 @@ int main(){
 	int n = 1;
 	gsl_vector* x = gsl_vector_alloc(n);
 	gsl_vector_set(x,0,-2);
-	double eps = 1e-6;
+	double eps = 1e-3;
 	qnewton(f1, x, eps);
 	vector_print("x =", x);
 	
 	n = 2;
+	gsl_vector* x1 = gsl_vector_alloc(n);
+	gsl_vector_set(x1,0,-2);
+	gsl_vector_set(x1,1,-2);
+	qnewton(f2, x1, eps);
+	vector_print("x_f2 =", x1);
+	
+	n = 2;
 	gsl_vector* x2 = gsl_vector_alloc(n);
-	gsl_vector_set(x2,0,10);
-	gsl_vector_set(x2,1,10);
+	gsl_vector_set(x2,0,18);
+	gsl_vector_set(x2,1,15);
 	qnewton(fRose, x2, eps);
 	vector_print("x_rose =", x2);
 	
 	n = 2;
 	gsl_vector* x3 = gsl_vector_alloc(n);
-	gsl_vector_set(x3,0,1);
-	gsl_vector_set(x3,1,1);
+	gsl_vector_set(x3,0,10);
+	gsl_vector_set(x3,1,10);
 	qnewton(fHimmel, x3, eps);
 	vector_print("x_Himmel =", x3);
 	

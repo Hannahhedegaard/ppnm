@@ -1,16 +1,20 @@
 iterations = 2
 x =
         -1 
-iterations = 13543
+iterations = 2
+x_f2 =
+         0 
+         0 
+iterations = 114
 x_rose =
-         1 
-         1 
-iterations = 28
+  0.999989 
+  0.999977 
+iterations = 15
 x_Himmel =
-         3 
-         2 
-iterations = 421
+  -3.77932 
+  -3.28319 
+iterations = 3
 x_BW =
-   125.916 
-   2.30821 
-   11.0116 
+   127.114 
+   28.2667 
+   5.03447 
