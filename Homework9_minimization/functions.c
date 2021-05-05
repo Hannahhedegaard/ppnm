@@ -10,12 +10,14 @@ void GS_solve(gsl_matrix* Q, gsl_matrix* R, gsl_vector* b, gsl_vector* x);
 void matrix_print(char s[], gsl_matrix* M);
 void vector_print(char s[], gsl_vector* v);
 
+
 void qnewton(
 	double f(gsl_vector* x), /* objective function */
 	gsl_vector* x, /* on input: starting point, on exit: approximation to root */
 	double eps /* accuracy goal, on exit |gradient| should be <eps */
 	){
 	int n = x->size;
+	int iter = 0;
 	double lambda;
 	double dfx;
 	double fx;
@@ -25,7 +27,8 @@ void qnewton(
 	double uy;
 	double sy;
 	double gamma;
-	double dx = 1e-6;
+	double s_grad;
+	double dx = eps*0.01;
 	
 	gsl_matrix* B = gsl_matrix_alloc(n,n);
 	gsl_matrix* as = gsl_matrix_alloc(n,n);
@@ -43,6 +46,8 @@ void qnewton(
     gsl_matrix* R = gsl_matrix_alloc(n,n);
     
     while(1){
+		iter += 1;
+		if (iter>1e6) break;
         fx = f(x); 
         for (int j =0; j<n; j++) {
             gsl_vector_set(x,j,gsl_vector_get(x,j)+dx);
@@ -51,78 +56,79 @@ void qnewton(
             gsl_vector_set(grad_F,j,df/dx);             
 			gsl_vector_set(x,j,gsl_vector_get(x,j)-dx);  
         }
-		
-        GS_decomp(B,R);
-        gsl_vector_memcpy(Dx,x);
-        gsl_vector_scale(grad_F,-1);
-        GS_solve(B,R,grad_F,Dx);
-        gsl_vector_scale(grad_F,-1);
+		 gsl_blas_dgemv(CblasNoTrans, -1, B, grad_F, 0, Dx);
     
         lambda = 2;
         while(1){
             lambda = (double)lambda/2;
             gsl_vector_scale(Dx,lambda);
-            gsl_vector_memcpy(y,x); 
+            gsl_vector_memcpy(y,x);
             gsl_vector_add(y,Dx);
             fy = f(y);
-            gsl_vector_scale(Dx,(double)1/lambda);
-        
-            if(fy<(1-(double)lambda/2)*fx || lambda < 0.02) {
+			gsl_blas_ddot(Dx, grad_F, &s_grad);
+            if(fy<fx+1e-4*s_grad){
                 break;
             }
+			
+			if (lambda < dx) {
+				gsl_matrix_set_identity(B);
+				break;
+			}
+			gsl_vector_scale(Dx,(double)1/lambda);
         }
-        gsl_vector_memcpy(x,y); 
-        fx = fy;
-        if(gsl_blas_dnrm2(Dx)<dx || fx < eps) {
+        
+        if(gsl_blas_dnrm2(Dx) < dx) {
                 break;
                 }
 	
-		gsl_vector_scale(Dx,lambda);
-		gsl_vector_add(Dx, x);
-		fxs = f(Dx);
-		for (int j =0; j<n; j++) {
-			gsl_vector_set(Dx,j,gsl_vector_get(Dx,j)+dx);
-            dfx = f(Dx);
-			df = dfx - fxs;
-            gsl_vector_set(grad_Fs,j,df/dx);             
-			gsl_vector_set(Dx,j,gsl_vector_get(Dx,j)-dx);   
-        }
+	// Opdatering af B til B + δB
+	gsl_vector_scale(Dx,lambda); // s-vektor bestemmes
+	gsl_vector_add(Dx, x); 	// s <- s + x
+	fxs = f(Dx); 			// funktionsværdien i (s+x)-vektoren
+	for (int j =0; j<n; j++) {
+		gsl_vector_set(Dx,j,gsl_vector_get(Dx,j)+dx);
+        dfx = f(Dx); 		// funktionsværdi i (s+x) + dx
+		df = dfx - fxs; 	// forskel i fkt.-værdi før og efter dx er lagt til
+        gsl_vector_set(grad_Fs,j,df/dx); //bestemmer gradienten af s+x            
+		gsl_vector_set(Dx,j,gsl_vector_get(Dx,j)-dx);   //går dx tilbage
+    }
 	
+	// u og y-vektor bestemmes
+	gsl_vector_sub(Dx, x); // Vektoren Dx er lig s. (s <- s - x)	
+	gsl_vector_memcpy(u,Dx); // u = s
+	gsl_vector_sub(grad_Fs, grad_F); // y-vektor bestemmes y = grad_Fs
+	gsl_blas_dgemv(CblasNoTrans, 1.0, B, grad_Fs, 0.0, By); // B*y -> By
+	gsl_vector_sub(u, By); // u = s - By
+	// prikprodukter uy og sy bestemmes
+	gsl_blas_ddot(u, grad_Fs, &uy); // prikprodukt u^T*y = uy
+	gsl_blas_ddot(Dx, grad_Fs, &sy); // prikprodukt s^T*y = sy
 	
-	gsl_vector_sub(Dx, x);
-		
-	gsl_vector_memcpy(u,Dx);
-	gsl_vector_sub(grad_Fs, grad_F);
-	gsl_blas_dgemv(CblasNoTrans, 1.0, B, grad_Fs, 0.0, By);
-	gsl_vector_sub(u, By);
+	if (fabs(sy)>eps){ // laver B om hvis sy er større end eps
 	
-	gsl_blas_ddot(u, grad_Fs, &uy);
-	gsl_blas_ddot(Dx, grad_Fs, &sy);
+	gamma = uy/(2.0*sy); // gamma bestemmes 
+	gsl_vector_scale(Dx, -gamma); // Dx <- -s*gamma
+	gsl_vector_add(u, Dx);		  // u <- u + -s*gmma
+	gsl_vector_scale(u, 1.0/sy);  // a bestemmes: u <- u/sy (a = u)
 	
-	if (fabs(sy)>eps){
-	
-	gamma = uy/(2.0*sy);
-	gsl_vector_scale(Dx, -gamma);
-	gsl_vector_add(u, Dx);
-	gsl_vector_scale(u, 1.0/sy);
-	
+	// laver matrixer til at bestemme δB
 	for (int i = 0; i<u->size; i++){
-		gsl_matrix_set(a,i,0,gsl_vector_get(u,i));
-		gsl_matrix_set(s,i,0,gsl_vector_get(Dx,i));
+		gsl_matrix_set(a,i,0,gsl_vector_get(u,i)); //a-matricen (n*1)
+		gsl_matrix_set(s,i,0,gsl_vector_get(Dx,i)); //s-matricen (n*1)
 	}
 	gsl_blas_dgemm(CblasNoTrans,CblasTrans, 1.0, a, s, 0.0, as);
 	gsl_blas_dgemm(CblasNoTrans,CblasTrans, 1.0, s, a, 0.0, sa);
-	gsl_matrix_memcpy(dB, as);
-	gsl_matrix_add(dB,sa);
-	gsl_matrix_add(B,dB);
+	
+	gsl_matrix_memcpy(dB, as); 
+	gsl_matrix_add(dB,sa); // as^T + sa^T = δB
+	gsl_matrix_add(B,dB); // B + δB - B opdateres.
 	}
 	
-	vector_print("x= ", x);
-	matrix_print("B = ", B);
-	
-
+	// opdaterer til det nye step
+	gsl_vector_memcpy(x,y); 
+    fx = fy;
     }
-    
+    printf("iterations = %d\n", iter);
+	
     gsl_matrix_free(B);
     gsl_matrix_free(as);
     gsl_matrix_free(sa);

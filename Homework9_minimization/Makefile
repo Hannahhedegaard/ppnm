@@ -25,4 +25,4 @@ out.txt: main
 main: functions.c main.c lineqfunctions.c
     
 clean: 
-	$(RM) main main.o functions.o *.txt *.png *.gpi
+	$(RM) main main.o functions.o out.txt *.png *.gpi

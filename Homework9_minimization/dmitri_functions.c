@@ -90,7 +90,7 @@ while (size(simplex, d) > simplex_size_goal){
 			contraction(simplex[hi], centroid, d, p1); 
 			double f_co = F(p1);
 			if (f_co < F_value[hi]){ //accept contraction
-				for (int i=0; i<d; i++) simplex [ hi ] [ i ]=p1 [ i ] ; F value [ hi ]= f c o ; 
+				for (int i=0; i<d; i++) simplex[hi][i]=p1[i]; F_value[hi]= f_co ; 
 			}
 			else { 				//do reduction
 				reduction(simplex, d, lo);			
