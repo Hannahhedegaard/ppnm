@@ -38,6 +38,11 @@ double fHimmel(gsl_vector* x){
 	return pow((xx*xx+yy-11),2)+pow((xx+yy*yy-7),2);
 }
 
+double f(double* x) {
+   return pow(1 - x[0], 2) + 100*pow(x[1] - x[0]*x[0], 2);
+}
+
+
 gsl_vector* E;
 gsl_vector* sigma;
 gsl_vector* dsigma;
@@ -82,6 +87,8 @@ double fBW(gsl_vector* x){
 	return sum;
 }
 
+int downhill_simplex(double F(double *), double** simplex, int d, double simplex_size_goal);
+
 int main(){
 	// opgave A
 	int n = 1;
@@ -120,6 +127,23 @@ int main(){
 	gsl_vector_set(x4,2,10);
 	qnewton(fBW, x4, eps);
 	vector_print("x_BW =", x4);
+	
+	// Opgave C
+	int d = 2;
+	double* simplex[] = {
+      (double[]){0.0, 0.0},
+      (double[]){0.0, 5.0},
+      (double[]){5.0, 0.0}
+	};
+	double sizegoal = 1e-5;
+	//double fxs[d + 1];
+	//double centroid[d];
+	//int hi = 0;
+	//int lo = 0;
+	int k; //antal iterations
+	k = downhill_simplex(f, simplex, d, sizegoal);
+	printf("Iterations = %d\n", k);
+	
 	
 	return 0;
 }
