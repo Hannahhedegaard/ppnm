@@ -1,3 +1,0 @@
-half m_{00} (should be 33):
-half m_{00} = 33
-status=17 : SOMETHING WENT TERRIBLY WRONG (status>0)
