@@ -1,8 +1,0 @@
-x_double = 2.22045e-16
-y_float = 0.000000
-z_longdouble = 2.22045e-16
-double with for loop = 2.22045e-16
-sum_up_float = 15.403683
-sum_down_float = inf
-1
-1
