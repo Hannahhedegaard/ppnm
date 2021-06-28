@@ -1,0 +1,58 @@
+Exercise 1. i)
+Finding maxiumum integer.
+Maximum integer with while loop = 2147483647
+Maximum integer with for loop = 2147483647
+Maximum integer with do while loop = 2147483647
+INT_MAX = 2147483647
+
+Exercise 1. ii)
+Finding minimum integer.
+Minimum integer with while loop = -2147483648
+Minimum integer with for loop = -2147483648
+Minimum integer with do while loop = -2147483648
+INT_MIN = -2147483648
+
+Exercise 1. iii)
+Finding machine epsilon.
+Machine eps for float with while loop = 1.192092896e-07
+Machine eps for float with for loop = 1.192092896e-07
+Machine eps for float with do while loop = 1.192092896e-07
+FLT_EPSILON = 1.192092896e-07
+
+Machine eps for double with while loop = 2.220446049e-16
+Machine eps for double with for loop = 2.220446049e-16
+Machine eps for double with do while loop = 2.220446049e-16
+DBL_EPSILON  = 2.220446049e-16
+
+Machine eps for long double with while loop = 2.220446049e-16
+Machine eps for long double with for loop = 2.220446049e-16
+Machine eps for long double with do while loop = 2.220446049e-16
+LDBL_EPSILON = 1.084202172e-19
+
+
+Exercise 2. i)
+Calculating sum.
+sum_up_float = 15.403683
+sum_down_float = 18.807919
+
+Exercise 2. ii)
+explain the difference
+The 'up' sum is smaller than the 'down sum.
+This is because the 'up' sum has small terms at the end of the sum,
+which are outside of the machine precision and will therefore not count.
+In the 'down' sum, the small terms at the beginning will count.
+
+Exercise 2. iii)
+does the sum converge?
+No, harmonic series are divergent
+
+Exercise 2. iv)
+Calculate sums with double
+sum_up_double = 20.966166
+sum_down_double = 20.966166
+The sums are now the same because double precision is smaller than float precision.
+
+Exercise 3.
+equal function
+0
+1

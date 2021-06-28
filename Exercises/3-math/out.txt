@@ -1,0 +1,22 @@
+Exercise 1
+Gamma function:
+Gamma(5) = 3.17805
+
+Bessel function:
+J1(0.5) = 0.242268
+
+Checking functions:
+sqrt(-2) = 0 + I*1.41421
+e^(i*pi) = -1 + I*1.22465e-16
+e^(i) = 0.540302 + I*0.841471
+i^(e) = -0.42822 + I*-0.903675
+i^(i) = 0.20788 + I*0
+
+Exercise 2
+Finding the number of significant digits of
+type float, double, and long double,
+using 1/9 = 0.1111111111... as example
+
+Precision of float: 0.1111111119389533996582031
+Precision of double: 0.1111111111111111049432054
+Precision of long double: 0.1111111111111111111096053

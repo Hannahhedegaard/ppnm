@@ -1,0 +1,10 @@
+testing komplex_add
+a= (2, 4)
+b= (5, 8)
+a+b sould =  (7, 12)
+a+b actually = (7, 12)
+testing komplex_sub
+a= (2, 4)
+b= (5, 8)
+a-b sould =  (-3, -4)
+a-b actually = (-3, -4)
