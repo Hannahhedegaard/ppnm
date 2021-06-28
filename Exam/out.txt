@@ -1,0 +1,48 @@
+Akima sub-spline.
+The Akima sub-spline is implemented in functions.c.
+The implementation is now tested on two different set of data-points.
+---------------------------------------------------
+Dataset 1: see input1.dat for original data-points.
+This will lead to a replication of Figure 1.2 from the book.
+
+Length of dataset 1: 6
+x-values:    y-values:
+    -3.5           -1
+    -2.1           -1
+    -0.6           -1
+     0.8            1
+     2.1            1
+     3.6            1
+
+The Akima sub-spline is calculated, see results in data1.txt.
+Furthermore, the cubic spline is calculated, results also in data1.txt.
+The results are shown in Figure1.pyxplot.png, and as this is a replication of Figure 1.2 in the book,
+the two figures can be compared.
+
+Comment: the two figures are very similar - and it is clear that the Akima sub-spline
+wiggels less than the cubic spline, as expected.
+---------------------------------------------------
+Dataset 2: see input2.dat for original data-points.
+This data-set is made to show how the Akima sub-spline interpolates,
+when one of the data-points lies away from the others.
+
+Length of dataset 2: 10
+x-values:    y-values:
+       1            2
+       2          2.1
+       3            2
+       4            5
+       5            2
+       6          1.9
+       7          1.8
+       8          1.9
+       9          2.2
+      10          1.5
+
+The Akima sub-spline is calculated, see results in data2.txt.
+Furthermore, the cubic spline is calculated, results also in data2.txt.
+The results are shown in Figure2.pyxplot.png.
+
+Comment: It is shown in the figure, that the Akima sub-spline makes a smooth interpolation
+through the data-points, even though there is an outlier. The cubic spline, on the other hand,
+shows the typical wiggels.

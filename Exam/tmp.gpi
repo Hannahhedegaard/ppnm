@@ -1,0 +1,15 @@
+\
+set term png;\
+set key top right;\
+set tics in;\
+set xrange [0.5:10.5];\
+set yrange [1.25:5.25];\
+set title "Example of akima sub-spline vs. cubic spline";\
+set xlabel "x";\
+set ylabel "y";\
+set output "Figure2.pyxplot.png";\
+plot \
+"input2.dat" using 1:2 with points title "Data points" \
+,"data2.txt" using 1:2 with lines title "Akima sub-spline" \
+,"data2.txt" using 1:3 with lines title "Cubic spline" \
+
