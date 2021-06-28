@@ -1,0 +1,45 @@
+Task A: Quasi-Newton method with numerical gradient, back-tracking linesearch, and rank-1 update.
+The quasi-Newton minimization method is implemented in functions.c.
+The routine is checked by finding minimum in four different functions:
+
+Find minimum of function: f(x) = (x+1)^2 - 3.
+Number of steps = 2
+Calculated minimum =
+        -1 
+Exact minimum = -1
+
+Find minimum of function: f(x,y) = x^2 + y^2.
+Number of steps = 2
+Calculated minimum =
+-1.49012e-08 
+-1.49012e-08 
+Exact minimum = (0,0).
+
+Find minimum of Rosenbrock's valley function: f(x,y) = (1-x)^2 + 100(y-x^2)^2.
+Number of steps = 310
+Calculated minimum =
+  0.999867 
+  0.999735 
+Exact minimum = (1,1).
+
+Find minimum of Himmelblau's function: f(x,y) = (x^2+y-11)^2+(x+y^2-7)^2.
+Number of steps = 66
+Calculated minimum =
+   3.58443 
+  -1.84816 
+Exact minimum = (3,2), (-2.805118, 3.131312), (-3.779310, -3.283186) or (3.584428, -1.848126).
+-----------------------------------------
+Task B: Higgs discovery.
+The Breit-Wigner function is fitted to the data, and the mass, width, and scale factor is determined.
+Number of steps = 932
+Calculated mass, width, and scale factor: =
+   125.972 
+    2.0892 
+   9.89027 
+-----------------------------------------
+Task C: Implement the downhill simplex method.
+The method is implemented in functions.c.
+The method is checked by calculating the minimum of the Rosenbrock function:
+Minimum (x,y) = (0.999999, 0.999999)
+Number of steps = 84
+Compared to the method in task A, the downhill simplex method is more accurate and efficient.

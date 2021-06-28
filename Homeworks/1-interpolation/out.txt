@@ -1,0 +1,18 @@
+Task A: Linear spline - Linear interpolation.
+gsl_vectors are used in this exercise.
+The linear interpolation function is implemented in linterp.c.
+Integration of the linear spline is implemented in linterp_integ.c.
+The plot in fig-linterp-pyxplot.png shows the original points, the linear interpolation,
+the	linear interpolation integration, and the two GSL routines to comparison.
+
+Task B: Quadratic spline.
+Quadratic spline is implemented in quad.c
+The derivaive and integral are implemented in quad_diff.c and quad_integ.c.
+The plot in fig-quadterp-pyxplot.png shows original points, and the quadratic interpolation, integration and differential.
+
+Task C: Cubic spline.
+Quadratic spline is implemented in cubic.c.
+The derivaive and integral are implemented in cubic_diff.c and cubic_integ.c.
+The plot in fig-cubicterp-pyxplot.png shows the original points, the cubic interpolation, integration and differential,
+together with the GSL routines for comparison.
+All data for linear, quadratic and cubic spline is put into linterp.dat.

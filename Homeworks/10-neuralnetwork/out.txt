@@ -1,0 +1,46 @@
+Task A
+In this exercise we construct a simplest artificial neural network which will be trained to interpolate a tabulated function.
+The activationfunction is a Gaussian wavelet, f(x) = x*exp(-x^2).
+network->params
+        -3 
+         1 
+         1 
+      -1.5 
+         1 
+         1 
+         0 
+         1 
+         1 
+       1.5 
+         1 
+         1 
+         3 
+         1 
+         1 
+
+The fitting function is cos(5*x-1)*exp(-|x|)
+Training...
+Number of steps = 2001
+The final parameters:
+network->params
+  -2.68775 
+   1.13554 
+  0.522348 
+  -1.26924 
+  0.567941 
+  0.918763 
+ -0.117912 
+  0.438293 
+   2.10154 
+   1.06771 
+  0.492876 
+   1.00024 
+   2.49312 
+   1.22388 
+  0.452488 
+
+A comparison of the estimated and exact y-values is shown in Figure 1.
+-------------------------------
+Task B
+The method is now modified so the network can also approximate derivative and anti-derivative.
+Figure 2 shows the comparison of the estimated and exact y-values, together with the derivative and anti-derivative.

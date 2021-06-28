@@ -1,0 +1,30 @@
+Task A: Newton's method with numerical Jacobian and back-tracking linesearch
+Newton's method is implemented as the function newton in functions.c.
+The routine is checked by finding roots of the function: f(x)=(x+1)^2.
+Root =
+  -0.99414 
+The exact result is -1.
+Furthermore, the extremums of the Rosenbrock's valley function f(x,y)=(1-x)^2+100*(y-x^2)^2 is found with the implementation.
+Extremums =
+         1 
+         1 
+The exact result is (1,1).
+---------------------------------------
+Task B: Bound states of hydrogen atom with shooting method for boundary value problems.
+The lowest root ε0 of the equation M(ε)=0 for rmax = 8 will now be calculated with the routines.
+ε0 =
+ -0.499975 
+The exact result is -1/2.
+The data from the calculation is written into hydrogenatom.txt.
+The plot of the resulting function is seen in Hydrogen.pyxplot.png.
+---------------------------------------
+Task C: Better boundary condition for the hydrogen atom problem.
+First, the boundary condition f(rmax) = 0 is used to investigate convergence of the solution as a function of rmax.
+The data from this first condition is written into C_firstcondition.txt.
+The data is plotted in C_firstcondition.pyxplot.png.
+
+Now, the boundary condition f(rmax->infinity)= r*exp(-k*r) is used instead, where k = sqrt(-2ε).
+The data from the second condition is written into C_secondcondition.txt.
+The data is plotted in C_secondcondition.pyxplot.png.
+For comparisson of the two see C1andC2.pyxplot.png.
+The plot shows that C_secondcondition converges much faster to the correct solution.

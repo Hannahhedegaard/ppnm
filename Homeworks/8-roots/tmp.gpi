@@ -1,0 +1,13 @@
+\
+set terminal png;\
+set output "C1andC2.pyxplot.png";\
+set key top right;\
+set tics out;\
+set xlabel "rmax";\
+set ylabel "Energy";\
+set title "Comparisson of C1 and C2";\
+plot \
+"C_firstcondition.txt" using 1:2 with points title "C1"\
+,"C_secondcondition.txt" using 1:2 with points title "C2"\
+    , -0.5 with lines title "Exact Result"\
+

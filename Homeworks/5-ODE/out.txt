@@ -1,0 +1,14 @@
+Task A: Embedded Runge-Kutta ODE integrator
+The Runge-Kutta stepper with XY=12 is implemented in functions.c.
+Furthermore, an adaptive-step-size driver routine is implemented in functions.c.
+The routines are checked with the example: u''=-u.
+As another example, the SIR model of epidemic development is considered.
+
+Task B: Store the path.
+The path from the uprime example is written in the file uprime.txt and plotted in uprime.pyxplot.png.
+The path from the SIR example is written into SIR.txt and plotted in SIR.pyxplot.png.
+
+Task C: Newtonian gravitational three-body problem.
+The routines are now used on Newtonian gravitational three-body problem.
+The path is written in Newton.txt and plotted in Newton.pyxplot.png.
+Furthermore, figure 8 is reproduced from this solution and is plotted in Figure8_Newton.pyxplot.png.

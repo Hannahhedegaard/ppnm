@@ -1,0 +1,16 @@
+Task A
+The experimental data are plotted with errorbars and the best fit.
+The half-life time is calculated as: log(2)/λ, where λ is the slope from the fit.
+Half-life time = 4.04452 days
+Half-life time (today) = 3.6319 days
+
+Task B
+Calculating the uncertainties.
+The uncertainty is calculated from propagation of error: log(2)/λ^2 * σ_λ
+Uncertainty in half-life time = 0.0834378 days
+Half-life time uncertainty (today) = 0.0023 days
+The modern uncertainty is a factor of 10 smaller than the one obtained in 1902.
+This is expected as modern experiments are much more accurate.
+
+Task C
+Two extra fits are plottet, where the fit coefficients are changed by δc.

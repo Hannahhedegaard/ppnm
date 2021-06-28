@@ -1,0 +1,87 @@
+Task A: Solving linear equations using QR-decomposition by modified Gram-Schmidt orthogonalization.
+Task A.1
+The function GS_decomp is implemented in functions.c.
+To check if the function works as intended, the following checks are made:
+Random matrix A = 
+  0.840188   0.394383   0.783099    0.79844 
+  0.911647   0.197551   0.335223    0.76823 
+  0.277775    0.55397   0.477397   0.628871 
+  0.364784   0.513401    0.95223   0.916195 
+
+Results after decomposition: 
+R = 
+   1.32183   0.645023    1.09206    1.42234 
+         0    0.59074   0.717744   0.622892 
+         0          0   0.390531   0.141036 
+         0          0          0   0.177895 
+Q = 
+  0.635623 -0.0264219   0.276352  -0.720357 
+  0.689684  -0.418646  -0.300807   0.508514 
+  0.210144   0.708303   -0.66697 -0.0964256 
+  0.275969   0.567754   0.623134   0.461736 
+
+Checks:
+Check that Q^T*Q = identity matrix: 
+Q^T*Q =
+         1 1.66533e-16 6.38378e-16 1.08247e-15 
+1.66533e-16          1 3.88578e-16 2.22045e-16 
+6.38378e-16 3.88578e-16          1 5.55112e-17 
+1.08247e-15 2.22045e-16 5.55112e-17          1 
+
+Check that QR = A:
+QR =
+  0.840188   0.394383   0.783099    0.79844 
+  0.911647   0.197551   0.335223    0.76823 
+  0.277775    0.55397   0.477397   0.628871 
+  0.364784   0.513401    0.95223   0.916195 
+
+Task A.2 
+The function GS_solve is implemented in functions.c.
+To check if the function works as intended, the following checks are made:
+Random matrix A = 
+  0.840188   0.394383   0.783099    0.79844 
+  0.911647   0.197551   0.335223    0.76823 
+  0.277775    0.55397   0.477397   0.628871 
+  0.364784   0.513401    0.95223   0.916195 
+x =
+  0.112783 
+  -1.14195 
+   0.27194 
+  0.974854 
+b =
+  0.635712 
+  0.717297 
+  0.141603 
+  0.606969 
+Checks that Ax = b:
+Ax =
+  0.635712 
+  0.717297 
+  0.141603 
+  0.606969 
+-------------------------------------
+Task B: Matrix inverse by Gram-Schmidt QR factorization.
+The function inverse is implemented in functions.c.
+To check if the function works as intended, the following checks are made:
+Inverse of A, B =
+   2.27016  -0.316953   0.230995   -1.87117 
+   1.58847   -1.53266    3.60774    -2.5755 
+   2.17001   -1.80257    -1.5121   0.658249 
+  -4.04934    2.85851  -0.542037    2.59556 
+Checks that AB = I 
+AB =
+         1 -4.44089e-16 -4.44089e-16          0 
+4.44089e-16          1 2.77556e-16 6.66134e-16 
+         0 -4.44089e-16          1 -4.44089e-16 
+4.44089e-16 4.44089e-16 2.77556e-16          1 
+Checks that BA = I
+BA =
+         1 -2.33147e-15 -3.77476e-15 -5.10703e-15 
+-7.10543e-15          1 -7.54952e-15 -9.32587e-15 
+-9.15934e-16 -2.77556e-16          1 -4.44089e-16 
+8.43769e-15 4.66294e-15 7.99361e-15          1 
+-------------------------------------
+Task C: Operations count for QR-decomposition and comparison with GSL
+Two time-measurings are made - both for this implementation and for the GSL-routine.
+The results are shown in the figure: Decomp_time.png.
+Comment: both routines goes like O(n^3).

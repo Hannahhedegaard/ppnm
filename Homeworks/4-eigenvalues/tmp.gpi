@@ -1,0 +1,17 @@
+\
+set terminal png;\
+set output "timediagonalization.pyxplot.png";\
+set key top left;\
+set tics out;\
+set xlabel "N";\
+set ylabel "Time (s)";\
+set title "Task C";\
+a=0.00000058; b=3.1; f(x)=a*x**b ;\
+c=0.00000021; d=3.2; g(x)=c*x**d ;\
+plot \
+"out_time_jacobi.txt" using 1:2 with points title "Implementation"\
+,"out_time_gsl.txt" using 1:2 with points title "GSL"\
+,"out_time_jacobiop.txt" using 1:2 with points title "Optimized implementation"\
+,f(x) with lines title "fit: 5.8e-7*n**(3.1)"\
+,g(x) with lines title "fit: 2.1e-7*n**(3.2)"\
+

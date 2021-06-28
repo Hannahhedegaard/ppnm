@@ -1,0 +1,61 @@
+Task A: Recursive adaptive integrator.
+A recursive adaptive integrator is implemented in functions.c.
+The integrator estimates the integral of a given function f(x)
+on a given interval [a,b] with the required absolute, acc, or relative, eps, accuracy goals.
+The implementation is tested on the two following functions:
+
+Integration of sqrt(x) from 0 to 1.
+acc = 0.001, eps = 0.001.
+Calculated integral = 0.6669539091
+Exact integral = 0.6666666667
+Number of calls = 16
+
+Integration of 4*sqrt(1-x^2) from 0 to 1.
+acc = 0.001, eps = 0.001.
+Calculated integral = 3.141834578
+Exact integral = 3.141592654
+Number of calls = 28
+
+Integration of 1/sqrt(x) from 0 to 1.
+acc = 0.001, eps = 0.001.
+Calculated integral = 1.9999615
+Exact integral = 2
+Number of calls = 8572
+---------------------------------------
+Task B: Open quadrature with Clenshaw–Curtis variable transformation.
+The new implementation is used on the two last functions from Task A, to compare accuracy and number of calls.
+The two new limits are calculated as:
+a = 0, b = 1.5708
+
+Integration of 4*sqrt(1-x^2) from 0 to 1 with Clenshaw–Curtis variable transformation.
+acc = 0.001, eps = 0.001.
+Calculated integral = 3.141592654
+Exact integral = 3.141592654
+Number of calls = 4
+
+Integration of 1/sqrt(x) from 0 to 1 with Clenshaw–Curtis variable transformation.
+acc = 0.001, eps = 0.001.
+Calculated integral = 1.999809468
+Exact integral = 2
+Number of calls = 484
+Comment: in both cases, the number of calls have been greatly improved.
+The accuracy is improved for the first integration but not significantly for the last.
+
+The integration of 4*sqrt(1-x^2) is compared with the GSL routine:
+Calculated GSL = 3.141592654
+Exact integral = 3.141592654
+Number of calls = 21
+---------------------------------------
+Task C: Infinite limits
+The integrator is generalized to accept infinite limits.
+The implementation is tested on the function:
+Integration of 2/(1+x^2) from 0 to infinity.
+acc = 0.001, eps = 0.001.
+Calculated integral = 3.141744728
+Exact integral = 3.141592654
+Number of calls = 24
+
+Comparison with GSL routine:
+Calculated GSL = 3.141592654
+Exact integral = 3.141592654
+Number of calls = 15

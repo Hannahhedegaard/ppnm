@@ -1,0 +1,17 @@
+Task A and B: Plain and quasi-random Monte Carlo integration.
+The two functions are implemented in functions.c.
+The functions are checked by calculating:
+Integral of sqrt(x) from 0 to 1 with plain MC        = 0.6666861893, error = 0.0007442960341
+Integral of sqrt(x) from 0 to 1 with quasi-random MC = 0.6666458624, error = 4.124894534e-05
+Exact result: 0.6666666667
+Comparison of the errors for the two methods are shown in Figure 1.
+
+The functions are further tested by calculating the integral given in Task A.
+Integral of integral in task A with plain MC        = 1.394384497, error = 0.02572123318
+Integral of integral in task A with quasi-random MC = 1.382293352, error = 0.0002085638922
+Exact result: 1.3932039296856768591842462603255
+Comparison of the errors for the two methods are shown in Figure 2.
+
+Comment: the two figures show, that the errors are smaller for the quasi-random method.
+The errors for the integral from task A with the plain method are widely distributed, and a fit is hard to make.
+Nevertheless, the errors are clearly smaller for the quasi-random method.
