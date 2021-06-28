@@ -1,7 +1,0 @@
-set term pdf
-set width 10
-set xlabel "$x$"
-set ylabel "$y$"
-set output "fig-pyxplot.pdf"
-plot [0:5] "out.data.txt" using 1:2 with lines title "myex" \
-,"out.data.txt" using 1:3 with lines title "exp from math"
